@@ -29,26 +29,31 @@ dah=1.5
 seq=""
 
 def send(seq):
-    print(seq)
-    kbd.send(morseCode[seq])
+    if seq not in morseCode:
+        print(f"Error: Unknown character ({seq}).")
+    elif type(morseCode[seq]) is tuple:
+        kbd.send(*morseCode[seq])
+    else:
+        kbd.send(morseCode[seq])
 
 prevState=key.value
 prevTimeStamp=time.monotonic()
 unsent=False
 
 while True:
-    if key.value != prevState:
+    state=key.value
+    if state != prevState:
         duration=time.monotonic()-prevTimeStamp
         prevTimeStamp=time.monotonic()
         if useLed:
-            led.value=key.value
+            led.value=state
         if prevState:
             if duration<(dah/2):
                 seq+="."
             else:
                 seq+="-"
-        prevState=key.value
-    elif seq and not key.value and (time.monotonic()-prevTimeStamp)>dah:
+        prevState=state
+    elif seq and not state and (time.monotonic()-prevTimeStamp)>dah:
         send(seq)
         seq=""
         unsent=False
