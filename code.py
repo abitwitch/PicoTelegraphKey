@@ -41,6 +41,8 @@ def send():
 
 def calcDah(duration):
     global dah, dahLog, dahIndex
+    if duration>dah*3:
+        return() #skip large outliers
     dahLog[dahIndex]=duration
     dahIndex=(dahIndex+1)%10
     dah=sum(dahLog)/len(dahLog)
