@@ -8,7 +8,7 @@ from adafruit_hid.keycode import Keycode
 led = digitalio.DigitalInOut(board.GP25)
 led.direction = digitalio.Direction.OUTPUT
 
-key = digitalio.DigitalInOut(board.GP16)
+key = digitalio.DigitalInOut(board.GP21)
 key.direction = digitalio.Direction.INPUT
 key.pull = digitalio.Pull.DOWN
 
