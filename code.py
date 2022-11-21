@@ -22,6 +22,7 @@ kbd = Keyboard(usb_hid.devices)
 
 #Config
 useLed=True
+farns=2 #Farnsworth speed factor (1 = no farnsworth)
 noiceDuration=0.01 #signals (dits) less than this are ignored
 dahFilePath="/storedDahTiming"
 
@@ -85,6 +86,6 @@ while True:
                 seq+="-"
                 calcDah(duration)
         prevState=state
-    elif seq and not state and (time.monotonic()-prevTimeStamp)>dah:
+    elif seq and not state and (time.monotonic()-prevTimeStamp)>(dah*farns):
         send()
 
